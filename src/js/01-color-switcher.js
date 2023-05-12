@@ -22,6 +22,3 @@ function onClickStopBtn() {
      startBtn.disabled = false;
     stopBtn.disabled = true;
 };
-
-
-
