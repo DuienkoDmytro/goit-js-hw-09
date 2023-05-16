@@ -3,16 +3,25 @@ import "flatpickr/dist/flatpickr.min.css";
 
 
 const startBtn = document.querySelector("[data-start]");
-
-
-startBtn.addEventListener("click", flatpickr);
-startBtn.disabled = true;
-
+const currentDate = new Date();
+const input = document.querySelector(`#datetime-picker`);
 const days = document.querySelector("[data-days]");
 const hours = document.querySelector("[data-hours]");
 const minutes = document.querySelector("[data-minutes]");
 const seconds = document.querySelector("[data-seconds]");
 
+startBtn.addEventListener("submit", (timerCalc) => {
+  setInterval((timerCalc), 1000);
+  currentDate = new Date(input.value);
+
+  const currentDateInMs = currentDate.getTime();
+  console.log(currentDate);
+});
+startBtn.disabled = true;
+function timerCalc() {
+  
+
+}
 
  
 const options = {
@@ -27,8 +36,8 @@ const options = {
     }
     {
       startBtn.disabled = false;
-    localStorage.setItem('selectedTime', selectedDates[0].getTime());
-    timerStatus = 1;
+   
+    
     }
     
    
@@ -38,11 +47,11 @@ const options = {
 
 flatpickr('#datetime-picker', options);   
 
-const currentTime = (Date.now());
-const selectedTime = localStorage.getItem('selectedTime', selectedDates[0].getTime())
-const timeRemain = selectedTime - currentTime;
+const actualDate = Date.now();
+const timeRemain = currentDate.getTime() - actualDate;
 
-console.log(currentTime);
+console.log(timeRemain);
+
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
