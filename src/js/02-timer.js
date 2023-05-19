@@ -3,25 +3,29 @@ import "flatpickr/dist/flatpickr.min.css";
 
 
 const startBtn = document.querySelector("[data-start]");
-const currentDate = new Date();
+// const currentDate = new Date();
 const input = document.querySelector(`#datetime-picker`);
 const days = document.querySelector("[data-days]");
 const hours = document.querySelector("[data-hours]");
 const minutes = document.querySelector("[data-minutes]");
 const seconds = document.querySelector("[data-seconds]");
+let timeCount = null;
 
-startBtn.addEventListener("submit", (timerCalc) => {
-  setInterval((timerCalc), 1000);
-  currentDate = new Date(input.value);
 
-  const currentDateInMs = currentDate.getTime();
-  console.log(currentDate);
-});
+startBtn.addEventListener("click", timerCalc); 
+
+ 
 startBtn.disabled = true;
 function timerCalc() {
-  
-
-}
+  timeCount = setInterval (() => { 
+  const currentDate = new Date(input.value);
+    const timeRemain = currentDate - new Date;  
+    convertMs(timeRemain);
+   
+    console.log(timeRemain);
+  }, 1000); 
+  transform();
+ }
 
  
 const options = {
@@ -47,13 +51,10 @@ const options = {
 
 flatpickr('#datetime-picker', options);   
 
-const actualDate = Date.now();
-const timeRemain = currentDate.getTime() - actualDate;
-
-console.log(timeRemain);
 
 
 function convertMs(ms) {
+
   // Number of milliseconds per unit of time
   const second = 1000;
   const minute = second * 60;
@@ -71,6 +72,13 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
+function transform( { days, hours, minutes, seconds } ) {
+  days.textContent = days;
+  hours.textContent = hours;
+  minutes.textContent = minutes;
+  seconds.textContent = seconds;
+}
+
 
 
 
