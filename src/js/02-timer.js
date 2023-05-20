@@ -18,13 +18,13 @@ startBtn.addEventListener("click", timerCalc);
 startBtn.disabled = true;
 function timerCalc() {
   timeCount = setInterval (() => { 
-  const currentDate = new Date(input.value);
-    const timeRemain = currentDate - new Date;  
-    convertMs(timeRemain);
-   
+    const currentDate = new Date(input.value);
+    convertMs(currentDate);
+        const timeRemain = currentDate - Date.now();  
     console.log(timeRemain);
-  }, 1000); 
-  transform();
+    console.log(currentDate)
+     }, 1000); 
+  transform(timeRemain);
  }
 
  
@@ -39,9 +39,7 @@ const options = {
       return;
     }
     {
-      startBtn.disabled = false;
-   
-    
+      startBtn.disabled = false;   
     }
     
    
