@@ -5,11 +5,12 @@ import "flatpickr/dist/flatpickr.min.css";
 const startBtn = document.querySelector("[data-start]");
 // const currentDate = new Date();
 const input = document.querySelector(`#datetime-picker`);
-const days = document.querySelector("[data-days]");
-const hours = document.querySelector("[data-hours]");
-const minutes = document.querySelector("[data-minutes]");
-const seconds = document.querySelector("[data-seconds]");
+const days1 = document.querySelector("[data-days]");
+const hours1 = document.querySelector("[data-hours]");
+const minutes1 = document.querySelector("[data-minutes]");
+const seconds1 = document.querySelector("[data-seconds]");
 let timeCount = null;
+let timeRemain = null;
 
 
 startBtn.addEventListener("click", timerCalc); 
@@ -18,14 +19,25 @@ startBtn.addEventListener("click", timerCalc);
 startBtn.disabled = true;
 function timerCalc() {
   timeCount = setInterval (() => { 
-    const currentDate = new Date(input.value);
-    convertMs(currentDate);
-        const timeRemain = currentDate - Date.now();  
-    console.log(timeRemain);
-    console.log(currentDate)
-     }, 1000); 
-  transform(timeRemain);
- }
+    const currentDate = new Date(input.value);    
+    const timeRemain = currentDate - Date.now();  
+    const timeRemainMs = convertMs(timeRemain);    
+    transform(timeRemainMs);
+       console.log(timeRemainMs);
+    console.log(currentDate);
+  }, 1000);   
+  
+}
+stopTime();
+ 
+function stopTime() {
+  if (timeRemain <= 0) 
+    clearInterval(timeCount);
+    startBtn.disabled = false;
+  return
+
+}
+
 
  
 const options = {
@@ -71,10 +83,10 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 function transform( { days, hours, minutes, seconds } ) {
-  days.textContent = days;
-  hours.textContent = hours;
-  minutes.textContent = minutes;
-  seconds.textContent = seconds;
+  days1.textContent = days;
+  hours1.textContent = hours;
+  minutes1.textContent = minutes;
+  seconds1.textContent = seconds;
 }
 
 
