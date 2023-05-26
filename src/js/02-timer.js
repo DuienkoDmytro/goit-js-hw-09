@@ -1,45 +1,44 @@
 import flatpickr from "flatpickr";
+import Notiflix from 'notiflix';
 import "flatpickr/dist/flatpickr.min.css";
+
 
 
 const startBtn = document.querySelector("[data-start]");
 // const currentDate = new Date();
 const input = document.querySelector(`#datetime-picker`);
-const days1 = document.querySelector("[data-days]");
-const hours1 = document.querySelector("[data-hours]");
-const minutes1 = document.querySelector("[data-minutes]");
-const seconds1 = document.querySelector("[data-seconds]");
+const daysOnTimer = document.querySelector("[data-days]");
+const hoursOnTimer = document.querySelector("[data-hours]");
+const minutesOnTimer = document.querySelector("[data-minutes]");
+const secondsOnTimer = document.querySelector("[data-seconds]");
 let timeCount = null;
 let timeRemain = null;
-
+const css = document.querySelector(`.timer`)
 
 startBtn.addEventListener("click", timerCalc); 
 
+
+css.setAttribute("style", "display:flex; gap: 24px;");
  
 startBtn.disabled = true;
 function timerCalc() {
   timeCount = setInterval (() => { 
     const currentDate = new Date(input.value);    
     const timeRemain = currentDate - Date.now();  
-    const timeRemainMs = convertMs(timeRemain);    
+    const timeRemainMs = convertMs(timeRemain);
+    if (timeRemain <= 0) {
+      clearInterval(timeCount);
+      // startBtn.disabled = false;
+      css.setAttribute("style", "display:flex; gap: 24px;");
+     Notiflix.Notify.success('Congradulations!!!!You can use the application!!!');
+    return
+  }
     transform(timeRemainMs);
-       console.log(timeRemainMs);
-    console.log(currentDate);
-  }, 1000);   
-  
-}
-stopTime();
- 
-function stopTime() {
-  if (timeRemain <= 0) 
-    clearInterval(timeCount);
-    startBtn.disabled = false;
-  return
-
+    
+    console.log(timeRemainMs);
+  }, 1000);      
 }
 
-
- 
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -47,21 +46,17 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0].getTime() < Date.now()) {
-      window.alert("Please choose a date in the future");
+      Notiflix.Notify.failure('Please choose a date in the future');
       return;
     }
     {
       startBtn.disabled = false;   
-    }
-    
-   
+    }  
     console.log(selectedDates[0]);
   },
 };
 
 flatpickr('#datetime-picker', options);   
-
-
 
 function convertMs(ms) {
 
@@ -83,12 +78,12 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 function transform( { days, hours, minutes, seconds } ) {
-  days1.textContent = days;
-  hours1.textContent = hours;
-  minutes1.textContent = minutes;
-  seconds1.textContent = seconds;
+  daysOnTimer.textContent = addLeadingZero(JSON.stringify(days));
+  hoursOnTimer.textContent = addLeadingZero(JSON.stringify(hours));
+  minutesOnTimer.textContent = addLeadingZero(JSON.stringify(minutes));
+  secondsOnTimer.textContent = addLeadingZero(JSON.stringify(seconds));
 }
 
-
-
-
+function addLeadingZero(value) {
+  return value.padStart(2, "0");
+};
