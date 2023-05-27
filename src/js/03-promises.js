@@ -3,54 +3,37 @@ import Notiflix from 'notiflix';
 const form = document.querySelector("form");
 const formData = {};
 
-
 function createPromise(position, delay) {
+
+  
   const promise = new Promise((resolve, rejected) => {
     const shouldResolve = Math.random() > 0.3;
-    if (shouldResolve) {
-      resolve(`✅ Fulfilled promise ${position} in ${delay}ms`)
-    } else
-    {
-      rejected(`❌ Rejected promise ${position} in ${delay}ms`)
-    }
-  })
-  promise.then(result => {
-      Notiflix.Notify.success(result);
-  },
-    error => {
-    Notiflix.Notify.failure(error);
-    }
-  );
-};
 
-function submit(e) {
-  e.preventDefault();
-
-  const getItems = JSON.parse(localStorage.getItem('formData'));
-  let position = 1;
-
-  setTimeout(() => {
-    if (getItems.amount < 1) {
-      return
-    }
-
-    createPromise(position, getItems.delay);
-    if (getItems.amount < 1) {
-      return
-    }
-
-    const intervalId = setInterval(() => {
-      position ++;
-
-      createPromise(position, getItems.step);
-
-      if (getItems.amount === position) {
-        clearInterval(intervalId);
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
       }
-    }, formData.step);
-  }, formData.delay);
+    }, delay);
+  });
+
+    promise.then(result => {
+      Notiflix.Notify.success(result);
+    },
+      error => {
+        Notiflix.Notify.failure(error);
+      }
+    );
+  }
+const getItems = JSON.parse(localStorage.getItem('formData'));
+let position = 1;
+ 
+function submit(e) {
+  e.preventDefault();  
 }
 
+for (let i = 1; i <= )
 function onInputCreate(e) {
   formData[e.target.name] = e.target.value;
 
