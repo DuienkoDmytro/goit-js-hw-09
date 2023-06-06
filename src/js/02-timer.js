@@ -21,14 +21,15 @@ startBtn.addEventListener("click", timerCalc);
 css.setAttribute("style", "display:flex; gap: 24px;");
  
 startBtn.disabled = true;
-function timerCalc() {
-  timeCount = setInterval (() => { 
+function timerCalc() {  
+  timeCount = setInterval(() => { 
     const currentDate = new Date(input.value);    
     const timeRemain = currentDate - Date.now();  
     const timeRemainMs = convertMs(timeRemain);
+    startBtn.disabled = true;
+    input.disabled = true;
     if (timeRemain <= 0) {
       clearInterval(timeCount);
-      // startBtn.disabled = false;
       css.setAttribute("style", "display:flex; gap: 24px;");
      Notiflix.Notify.success('Congradulations!!!!You can use the application!!!');
     return
@@ -36,7 +37,7 @@ function timerCalc() {
     transform(timeRemainMs);
     
     console.log(timeRemainMs);
-  }, 1000);      
+  }, 1000);       
 }
 
 const options = {

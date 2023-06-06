@@ -4,7 +4,7 @@ let startColor = null;
 
 startBtn.addEventListener("click", onClickStartBtn);
 stopBtn.addEventListener("click", onClickStopBtn);
-
+stopBtn.disabled = true;
 
 
 function getRandomHexColor() {

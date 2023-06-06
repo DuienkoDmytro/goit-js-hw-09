@@ -17,9 +17,9 @@ function createPromise(position, delay) {
   })
 }
 
-
 function submit(e) {
   e.preventDefault();
+  
   const { delay, step, amount } = e.currentTarget.elements;
   for (let i = 1; i <= amount.value; i++) {
     const delayPromice = Number(delay.value) + step.value * (i - 1);
@@ -30,5 +30,5 @@ function submit(e) {
       .catch(({ position, delay }) => {
         Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
-  }
+  }form.reset();
 }
